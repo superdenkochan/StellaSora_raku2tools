@@ -5,6 +5,20 @@ let charactersData = null; // JSONから読み込んだデータ
 const MAX_SUB_LEVEL = 6; // サブ素質の最大レベル（アップデートで変更可能）
 const MAX_CORE_POTENTIALS = 2; // コア素質の最大取得数
 
+// 素質の定義（全キャラ共通）
+const POTENTIAL_DEFINITIONS = {
+    main: {
+        core: ['mc1', 'mc2', 'mc3', 'mc4'],
+        sub: ['ms1', 'ms2', 'ms3', 'ms4', 'ms5', 'ms6', 
+              'ms7', 'ms8', 'ms9', 'ms10', 'ms11', 'ms12']
+    },
+    support: {
+        core: ['sc1', 'sc2', 'sc3', 'sc4'],
+        sub: ['ss1', 'ss2', 'ss3', 'ss4', 'ss5', 'ss6',
+              'ss7', 'ss8', 'ss9', 'ss10', 'ss11', 'ss12']
+    }
+};
+
 // 現在の状態を保持
 const currentState = {
     main: {
@@ -23,6 +37,20 @@ const currentState = {
         subPotentials: {}
     }
 };
+
+// ========================================
+// ヘルパー関数
+// ========================================
+
+// 画像パスの自動生成
+function getPotentialImagePath(charId, potentialId) {
+    return `images/potentials/${charId}_${potentialId}.jpg`;
+}
+
+// Descriptionの取得
+function getDescription(character, potentialId) {
+    return character.descriptions[potentialId] || '説明文が設定されていません';
+}
 
 // ========================================
 // 初期化
@@ -104,46 +132,45 @@ function setupEventListeners() {
     // スクリーンショット
     document.getElementById('screenshot').addEventListener('click', handleScreenshot);
     
-    // プリセット保存・読み込み
+    // プリセット保存
     document.querySelectorAll('.btn-save').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const presetNumber = e.target.dataset.preset;
-            handleSavePreset(presetNumber);
+            const presetNum = parseInt(e.target.dataset.preset);
+            handleSavePreset(presetNum);
         });
     });
     
+    // プリセット読み込み
     document.querySelectorAll('.btn-load').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const presetNumber = e.target.dataset.preset;
-            handleLoadPreset(presetNumber);
+            const presetNum = parseInt(e.target.dataset.preset);
+            handleLoadPreset(presetNum);
         });
     });
 }
 
 // ========================================
-// キャラクター選択処理
+// キャラクター選択時の処理
 // ========================================
 function handleCharacterSelect(e) {
-    const select = e.target;
-    const slot = select.dataset.slot; // 'main', 'support1', 'support2'
-    const characterId = select.value;
+    const slot = e.target.dataset.slot;
+    const charId = e.target.value;
     
-    if (!characterId) {
-        // キャラクター未選択の場合、素質をクリア
-        clearPotentials(slot);
+    if (!charId) {
+        // 選択解除
         currentState[slot].characterId = null;
+        document.getElementById(`${slot}-potentials`).innerHTML = '';
+        saveCurrentState();
         return;
     }
     
-    // キャラクターデータを取得
-    const character = charactersData.characters.find(c => c.id === characterId);
-    if (!character) {
-        console.error('キャラクターが見つかりません:', characterId);
-        return;
-    }
+    const character = charactersData.characters.find(c => c.id === charId);
+    if (!character) return;
     
     // 状態を更新
-    currentState[slot].characterId = characterId;
+    currentState[slot].characterId = charId;
+    currentState[slot].corePotentials = {};
+    currentState[slot].subPotentials = {};
     
     // 素質を表示
     displayPotentials(slot, character);
@@ -159,44 +186,36 @@ function displayPotentials(slot, character) {
     const container = document.getElementById(`${slot}-potentials`);
     container.innerHTML = '';
     
-    // 主力か支援かで素質データを切り替え
-    const potentialType = slot === 'main' ? 'main' : 'support';
-    const potentials = character.potentials[potentialType];
+    // 主力 or 支援を判定
+    const role = slot === 'main' ? 'main' : 'support';
+    const potentialDef = POTENTIAL_DEFINITIONS[role];
     
     // コア素質セクション
-    const coreSection = createPotentialSection('コア素質', potentials.core, slot, 'core');
+    const coreSection = createPotentialSection('コア素質', potentialDef.core, character, slot, 'core');
     container.appendChild(coreSection);
     
     // サブ素質セクション
-    const subSection = createPotentialSection('サブ素質', potentials.sub, slot, 'sub');
+    const subSection = createPotentialSection('サブ素質', potentialDef.sub, character, slot, 'sub');
     container.appendChild(subSection);
-    
-    // 状態の初期化（既存の状態があればそれを使う、なければ新規作成）
-    if (!currentState[slot].corePotentials || Object.keys(currentState[slot].corePotentials).length === 0) {
-        initializePotentialStates(slot, potentials);
-    }
-    
-    // UIに状態を反映
-    applyStatesToUI(slot);
 }
 
 // ========================================
 // 素質セクションの作成
 // ========================================
-function createPotentialSection(title, potentials, slot, type) {
+function createPotentialSection(title, potentialIds, character, slot, type) {
     const section = document.createElement('div');
     section.className = 'potential-group';
     
-    const titleElement = document.createElement('div');
-    titleElement.className = 'potential-group-title';
-    titleElement.textContent = title;
-    section.appendChild(titleElement);
+    const titleElem = document.createElement('div');
+    titleElem.className = 'potential-group-title';
+    titleElem.textContent = title;
+    section.appendChild(titleElem);
     
     const grid = document.createElement('div');
     grid.className = 'potentials-grid';
     
-    potentials.forEach(potential => {
-        const card = createPotentialCard(potential, slot, type);
+    potentialIds.forEach(potentialId => {
+        const card = createPotentialCard(character, potentialId, slot, type);
         grid.appendChild(card);
     });
     
@@ -207,78 +226,108 @@ function createPotentialSection(title, potentials, slot, type) {
 // ========================================
 // 素質カードの作成
 // ========================================
-function createPotentialCard(potential, slot, type) {
+function createPotentialCard(character, potentialId, slot, type) {
     const card = document.createElement('div');
     card.className = 'potential-card';
-    card.dataset.potentialId = potential.id;
     card.dataset.slot = slot;
+    card.dataset.potentialId = potentialId;
     card.dataset.type = type;
     
     // 画像ラッパー
     const imageWrapper = document.createElement('div');
     imageWrapper.className = 'potential-image-wrapper';
     
+    // 初期状態の設定
+    if (type === 'core') {
+        // コア素質の初期状態: 取得しない（グレーアウト）
+        if (!currentState[slot].corePotentials[potentialId]) {
+            currentState[slot].corePotentials[potentialId] = {
+                obtained: false,
+                acquired: false
+            };
+        }
+        const state = currentState[slot].corePotentials[potentialId];
+        if (!state.obtained) {
+            imageWrapper.classList.add('grayed-out');
+        }
+        if (state.acquired) {
+            imageWrapper.classList.add('obtained');
+        }
+    } else {
+        // サブ素質の初期状態: 取得しない
+        if (!currentState[slot].subPotentials[potentialId]) {
+            currentState[slot].subPotentials[potentialId] = {
+                status: 'none',
+                count: 0
+            };
+        }
+        const state = currentState[slot].subPotentials[potentialId];
+        if (state.status === 'none') {
+            imageWrapper.classList.add('grayed-out');
+        }
+        
+        // レベル6の場合、サムズアップ表示
+        if (state.status === 'level6') {
+            const thumbsUp = document.createElement('div');
+            thumbsUp.className = 'thumbs-up';
+            thumbsUp.textContent = '👍';
+            imageWrapper.appendChild(thumbsUp);
+        }
+        
+        // カウント表示
+        if (state.count > 0) {
+            const countElem = document.createElement('div');
+            countElem.className = 'potential-count';
+            countElem.textContent = state.count;
+            imageWrapper.appendChild(countElem);
+        }
+    }
+    
     // 画像
-    const image = document.createElement('img');
-    image.className = 'potential-image';
-    image.src = potential.image;
-    image.alt = potential.name;
-    imageWrapper.appendChild(image);
+    const img = document.createElement('img');
+    img.className = 'potential-image';
+    img.src = getPotentialImagePath(character.id, potentialId);
+    img.alt = potentialId;
+    img.onerror = () => {
+        img.src = 'https://placehold.co/80x80?text=' + potentialId;
+    };
+    
+    // 画像クリックイベント
+    img.addEventListener('click', () => handlePotentialImageClick(slot, potentialId, type));
+    
+    imageWrapper.appendChild(img);
     
     // ツールチップ（説明文）
     const tooltip = document.createElement('div');
     tooltip.className = 'potential-tooltip';
-    tooltip.textContent = potential.description;
+    tooltip.textContent = getDescription(character, potentialId);
     imageWrapper.appendChild(tooltip);
-    
-    // カウント表示（後で追加）
-    const countDisplay = document.createElement('div');
-    countDisplay.className = 'potential-count';
-    countDisplay.style.display = 'none';
-    imageWrapper.appendChild(countDisplay);
-    
-    // 画像クリックイベント
-    imageWrapper.addEventListener('click', () => handlePotentialImageClick(slot, type, potential.id));
     
     card.appendChild(imageWrapper);
     
-    // 名前
-    const name = document.createElement('div');
-    name.className = 'potential-name';
-    name.textContent = potential.name;
-    card.appendChild(name);
+    // 素質名（廃止されたのでコメントアウト）
+    // const name = document.createElement('div');
+    // name.className = 'potential-name';
+    // name.textContent = potentialId;
+    // card.appendChild(name);
     
-    // ステータス選択
-    const statusControl = createStatusControl(slot, type, potential.id);
-    card.appendChild(statusControl);
-    
-    return card;
-}
-
-// ========================================
-// ステータスコントロールの作成
-// ========================================
-function createStatusControl(slot, type, potentialId) {
+    // ステータスボタン
     const statusDiv = document.createElement('div');
     statusDiv.className = 'potential-status';
     
     if (type === 'core') {
-        // コア素質：トグルボタン
-        const button = document.createElement('button');
-        button.className = 'status-btn inactive';
-        button.textContent = '取得しない';
-        button.dataset.slot = slot;
-        button.dataset.type = type;
-        button.dataset.potentialId = potentialId;
-        button.addEventListener('click', () => handleCoreStatusToggle(slot, potentialId));
-        statusDiv.appendChild(button);
+        // コア素質: トグルボタン
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'status-btn';
+        const state = currentState[slot].corePotentials[potentialId];
+        toggleBtn.textContent = state.obtained ? '取得する' : '取得しない';
+        toggleBtn.classList.add(state.obtained ? 'active' : 'inactive');
+        toggleBtn.addEventListener('click', () => handleCoreToggle(slot, potentialId));
+        statusDiv.appendChild(toggleBtn);
     } else {
-        // サブ素質：プルダウン
+        // サブ素質: レベル選択ドロップダウン
         const select = document.createElement('select');
         select.className = 'status-select';
-        select.dataset.slot = slot;
-        select.dataset.type = type;
-        select.dataset.potentialId = potentialId;
         
         const options = [
             { value: 'level6', text: 'レベル6' },
@@ -294,199 +343,104 @@ function createStatusControl(slot, type, potentialId) {
             select.appendChild(option);
         });
         
-        select.addEventListener('change', () => handleSubStatusChange(slot, potentialId, select.value));
+        const state = currentState[slot].subPotentials[potentialId];
+        select.value = state.status;
+        select.addEventListener('change', (e) => handleSubLevelChange(slot, potentialId, e.target.value));
         statusDiv.appendChild(select);
     }
     
-    return statusDiv;
+    card.appendChild(statusDiv);
+    
+    return card;
 }
 
 // ========================================
-// 素質状態の初期化
+// コア素質のトグル処理
 // ========================================
-function initializePotentialStates(slot, potentials) {
-    // コア素質
-    currentState[slot].corePotentials = {};
-    potentials.core.forEach(p => {
-        currentState[slot].corePotentials[p.id] = {
-            obtained: false,  // 取得する/しない
-            acquired: false   // 取得済みかどうか（チェックマーク）
-        };
-    });
-    
-    // サブ素質
-    currentState[slot].subPotentials = {};
-    potentials.sub.forEach(p => {
-        currentState[slot].subPotentials[p.id] = {
-            status: 'none',  // 'level6', 'level2-5', 'level1', 'none'
-            count: 0         // クリックカウント
-        };
-    });
-}
-
-// ========================================
-// UIに状態を反映
-// ========================================
-function applyStatesToUI(slot) {
-    const container = document.getElementById(`${slot}-potentials`);
-    
-    // コア素質
-    Object.entries(currentState[slot].corePotentials).forEach(([potentialId, state]) => {
-        const card = container.querySelector(`.potential-card[data-potential-id="${potentialId}"][data-type="core"]`);
-        if (!card) return;
-        
-        const button = card.querySelector('.status-btn');
-        const imageWrapper = card.querySelector('.potential-image-wrapper');
-        
-        if (state.obtained) {
-            button.textContent = '取得する';
-            button.className = 'status-btn active';
-            imageWrapper.classList.remove('grayed-out');
-        } else {
-            button.textContent = '取得しない';
-            button.className = 'status-btn inactive';
-            imageWrapper.classList.add('grayed-out');
-        }
-        
-        if (state.acquired) {
-            imageWrapper.classList.add('obtained');
-        } else {
-            imageWrapper.classList.remove('obtained');
-        }
-    });
-    
-    // サブ素質
-    Object.entries(currentState[slot].subPotentials).forEach(([potentialId, state]) => {
-        const card = container.querySelector(`.potential-card[data-potential-id="${potentialId}"][data-type="sub"]`);
-        if (!card) return;
-        
-        const select = card.querySelector('.status-select');
-        const imageWrapper = card.querySelector('.potential-image-wrapper');
-        const countDisplay = card.querySelector('.potential-count');
-        
-        select.value = state.status;
-        
-        // グレーアウト
-        if (state.status === 'none') {
-            imageWrapper.classList.add('grayed-out');
-        } else {
-            imageWrapper.classList.remove('grayed-out');
-        }
-        
-        // レベル6のサムズアップ
-        let thumbsUp = imageWrapper.querySelector('.thumbs-up');
-        if (state.status === 'level6') {
-            if (!thumbsUp) {
-                thumbsUp = document.createElement('div');
-                thumbsUp.className = 'thumbs-up';
-                thumbsUp.textContent = '👍';
-                imageWrapper.appendChild(thumbsUp);
-            }
-        } else {
-            if (thumbsUp) {
-                thumbsUp.remove();
-            }
-        }
-        
-        // カウント表示
-        if (state.count > 0 && state.status !== 'none') {
-            countDisplay.textContent = state.count;
-            countDisplay.style.display = 'block';
-        } else {
-            countDisplay.style.display = 'none';
-        }
-    });
-}
-
-// ========================================
-// コア素質のステータストグル
-// ========================================
-function handleCoreStatusToggle(slot, potentialId) {
+function handleCoreToggle(slot, potentialId) {
     const state = currentState[slot].corePotentials[potentialId];
+    const newObtained = !state.obtained;
     
-    if (!state.obtained) {
-        // 「取得しない」→「取得する」に変更しようとしている
-        // 既に2つ取得しているかチェック
-        const obtainedCount = Object.values(currentState[slot].corePotentials).filter(s => s.obtained).length;
-        
-        if (obtainedCount >= MAX_CORE_POTENTIALS) {
-            showError('コア素質は2つしか取得できません');
-            return;
-        }
-        
-        state.obtained = true;
-    } else {
-        // 「取得する」→「取得しない」に変更
+    // 取得する→取得しないへの変更は常にOK
+    if (!newObtained) {
         state.obtained = false;
-        state.acquired = false; // チェックマークもリセット
+        state.acquired = false;
+        refreshPotentialDisplay(slot);
+        saveCurrentState();
+        return;
     }
     
-    applyStatesToUI(slot);
-    saveCurrentState();
-}
-
-// ========================================
-// サブ素質のステータス変更
-// ========================================
-function handleSubStatusChange(slot, potentialId, newStatus) {
-    const state = currentState[slot].subPotentials[potentialId];
-    state.status = newStatus;
+    // 取得しない→取得するへの変更は、2つまでの制限をチェック
+    const obtainedCount = Object.values(currentState[slot].corePotentials)
+        .filter(s => s.obtained).length;
     
-    // ステータスが変わったらカウントをリセット
-    state.count = 0;
+    if (obtainedCount >= MAX_CORE_POTENTIALS) {
+        showError(`コア素質は${MAX_CORE_POTENTIALS}つまでしか取得できません`);
+        return;
+    }
     
-    applyStatesToUI(slot);
+    state.obtained = true;
+    refreshPotentialDisplay(slot);
     saveCurrentState();
 }
 
 // ========================================
 // 素質画像クリック処理
 // ========================================
-function handlePotentialImageClick(slot, type, potentialId) {
+function handlePotentialImageClick(slot, potentialId, type) {
     if (type === 'core') {
-        // コア素質の場合
+        // コア素質: 取得する状態の時のみカウント切り替え
         const state = currentState[slot].corePotentials[potentialId];
+        if (!state.obtained) return;
         
-        if (!state.obtained) {
-            // 「取得しない」状態では何もしない
-            return;
-        }
-        
-        // チェックマークのトグル
         state.acquired = !state.acquired;
-        
     } else {
-        // サブ素質の場合
+        // サブ素質: レベル1以上の時のみカウント増加
         const state = currentState[slot].subPotentials[potentialId];
+        if (state.status === 'none') return;
         
-        if (state.status === 'none') {
-            // 「取得しない」状態では何もしない
-            return;
-        }
-        
-        // カウントを増加（最大値に達したらリセット）
-        state.count++;
-        if (state.count > MAX_SUB_LEVEL) {
-            state.count = 0;
-        }
+        state.count = (state.count + 1) % (MAX_SUB_LEVEL + 1);
     }
     
-    applyStatesToUI(slot);
+    refreshPotentialDisplay(slot);
     saveCurrentState();
+}
+
+// ========================================
+// サブ素質のレベル変更処理
+// ========================================
+function handleSubLevelChange(slot, potentialId, newStatus) {
+    const state = currentState[slot].subPotentials[potentialId];
+    state.status = newStatus;
+    state.count = 0; // レベル変更時はカウントをリセット
+    
+    refreshPotentialDisplay(slot);
+    saveCurrentState();
+}
+
+// ========================================
+// 素質表示の更新
+// ========================================
+function refreshPotentialDisplay(slot) {
+    const charId = currentState[slot].characterId;
+    if (!charId) return;
+    
+    const character = charactersData.characters.find(c => c.id === charId);
+    if (!character) return;
+    
+    displayPotentials(slot, character);
 }
 
 // ========================================
 // 取得しない素質を非表示
 // ========================================
 function handleHideUnobtained(e) {
-    const hide = e.target.checked;
+    const hideUnobtained = e.target.checked;
     
     document.querySelectorAll('.potential-card').forEach(card => {
         const slot = card.dataset.slot;
-        const type = card.dataset.type;
         const potentialId = card.dataset.potentialId;
-        
-        if (!slot || !currentState[slot]) return;
+        const type = card.dataset.type;
         
         let shouldHide = false;
         
@@ -498,7 +452,7 @@ function handleHideUnobtained(e) {
             shouldHide = state && state.status === 'none';
         }
         
-        if (hide && shouldHide) {
+        if (hideUnobtained && shouldHide) {
             card.classList.add('hidden');
         } else {
             card.classList.remove('hidden');
@@ -510,27 +464,23 @@ function handleHideUnobtained(e) {
 // カウントリセット
 // ========================================
 function handleResetCount() {
-    // コア素質のacquiredをリセット
-    Object.keys(currentState).forEach(slot => {
-        if (currentState[slot].corePotentials) {
-            Object.values(currentState[slot].corePotentials).forEach(state => {
-                state.acquired = false;
-            });
-        }
-        
-        // サブ素質のcountをリセット
-        if (currentState[slot].subPotentials) {
-            Object.values(currentState[slot].subPotentials).forEach(state => {
-                state.count = 0;
-            });
-        }
+    // コア素質のacquiredをすべてfalseに
+    Object.values(currentState).forEach(slotState => {
+        Object.values(slotState.corePotentials).forEach(state => {
+            state.acquired = false;
+        });
     });
     
-    // UIに反映
+    // サブ素質のcountをすべて0に
+    Object.values(currentState).forEach(slotState => {
+        Object.values(slotState.subPotentials).forEach(state => {
+            state.count = 0;
+        });
+    });
+    
+    // 表示を更新
     ['main', 'support1', 'support2'].forEach(slot => {
-        if (currentState[slot].characterId) {
-            applyStatesToUI(slot);
-        }
+        refreshPotentialDisplay(slot);
     });
     
     saveCurrentState();
@@ -540,174 +490,150 @@ function handleResetCount() {
 // 初期化
 // ========================================
 function handleResetAll() {
-    if (!confirm('初期化しますか？\n全ての設定がリセットされます。')) {
+    if (!confirm('すべての設定を初期化しますか？')) {
         return;
     }
     
-    // 全ての状態をリセット
-    Object.keys(currentState).forEach(slot => {
-        currentState[slot] = {
-            characterId: null,
-            corePotentials: {},
-            subPotentials: {}
-        };
-    });
-    
-    // UIをリセット
-    document.querySelectorAll('.character-select').forEach(select => {
-        select.value = '';
-    });
-    
+    // 状態をクリア
     ['main', 'support1', 'support2'].forEach(slot => {
-        clearPotentials(slot);
+        currentState[slot].characterId = null;
+        currentState[slot].corePotentials = {};
+        currentState[slot].subPotentials = {};
+        
+        // キャラクター選択をリセット
+        const select = document.querySelector(`.character-select[data-slot="${slot}"]`);
+        if (select) {
+            select.value = '';
+        }
+        
+        // 素質表示をクリア
+        const container = document.getElementById(`${slot}-potentials`);
+        if (container) {
+            container.innerHTML = '';
+        }
     });
     
-    // チェックボックスもリセット
+    // チェックボックスをリセット
     document.getElementById('hideUnobtained').checked = false;
     
     saveCurrentState();
 }
 
 // ========================================
-// 素質表示のクリア
-// ========================================
-function clearPotentials(slot) {
-    const container = document.getElementById(`${slot}-potentials`);
-    container.innerHTML = '';
-}
-
-// ========================================
-// プリセット初期化
+// プリセット管理
 // ========================================
 function initializePresets() {
     for (let i = 1; i <= 10; i++) {
         const preset = loadPreset(i);
         if (preset) {
-            updatePresetThumbnail(i, preset);
-            enableLoadButton(i);
+            updatePresetDisplay(i, preset);
+            // 読み込みボタンを有効化
+            const loadBtn = document.querySelector(`.btn-load[data-preset="${i}"]`);
+            if (loadBtn) {
+                loadBtn.disabled = false;
+            }
         }
     }
 }
 
-// ========================================
-// プリセット保存
-// ========================================
-function handleSavePreset(presetNumber) {
-    const existingPreset = loadPreset(presetNumber);
+function handleSavePreset(presetNum) {
+    const existingPreset = loadPreset(presetNum);
     
-    // カウントリセット状態で保存
-    const stateToSave = JSON.parse(JSON.stringify(currentState)); // ディープコピー
-    
-    // カウントをリセット
-    Object.keys(stateToSave).forEach(slot => {
-        if (stateToSave[slot].corePotentials) {
-            Object.values(stateToSave[slot].corePotentials).forEach(state => {
-                state.acquired = false;
-            });
-        }
-        if (stateToSave[slot].subPotentials) {
-            Object.values(stateToSave[slot].subPotentials).forEach(state => {
-                state.count = 0;
-            });
-        }
+    // カウントをリセットした状態でコピー
+    const stateToSave = JSON.parse(JSON.stringify(currentState));
+    Object.values(stateToSave).forEach(slotState => {
+        Object.values(slotState.corePotentials).forEach(state => {
+            state.acquired = false;
+        });
+        Object.values(slotState.subPotentials).forEach(state => {
+            state.count = 0;
+        });
     });
     
-    // 既存のプリセットと異なる場合は確認
+    // 既存プリセットと異なる場合は確認
     if (existingPreset && JSON.stringify(existingPreset) !== JSON.stringify(stateToSave)) {
-        if (!confirm(`プリセット${presetNumber}を上書きしますか？`)) {
+        if (!confirm(`プリセット${presetNum}を上書きしますか？`)) {
             return;
         }
     }
     
     // 保存
-    localStorage.setItem(`preset_${presetNumber}`, JSON.stringify(stateToSave));
-    updatePresetThumbnail(presetNumber, stateToSave);
-    enableLoadButton(presetNumber);
+    localStorage.setItem(`preset_${presetNum}`, JSON.stringify(stateToSave));
+    updatePresetDisplay(presetNum, stateToSave);
+    
+    // 読み込みボタンを有効化
+    const loadBtn = document.querySelector(`.btn-load[data-preset="${presetNum}"]`);
+    if (loadBtn) {
+        loadBtn.disabled = false;
+    }
 }
 
-// ========================================
-// プリセット読み込み
-// ========================================
-function handleLoadPreset(presetNumber) {
-    const preset = loadPreset(presetNumber);
+function handleLoadPreset(presetNum) {
+    const preset = loadPreset(presetNum);
     if (!preset) return;
     
-    // 現在の状態が初期化状態でない場合は確認
+    // 現在の状態が初期状態でない場合は確認
     const isInitialState = !currentState.main.characterId && 
-                           !currentState.support1.characterId && 
-                           !currentState.support2.characterId;
+                          !currentState.support1.characterId && 
+                          !currentState.support2.characterId;
     
-    if (!isInitialState) {
+    if (!isInitialState && JSON.stringify(currentState) !== JSON.stringify(preset)) {
         if (!confirm('現在表示中の情報は失われますが、よろしいですか？')) {
             return;
         }
     }
     
-    // プリセットを現在の状態にコピー
+    // プリセットを読み込み
     Object.assign(currentState, JSON.parse(JSON.stringify(preset)));
     
-    // UIに反映
+    // UIを更新
     ['main', 'support1', 'support2'].forEach(slot => {
         const select = document.querySelector(`.character-select[data-slot="${slot}"]`);
+        if (select) {
+            select.value = currentState[slot].characterId || '';
+        }
+        
         if (currentState[slot].characterId) {
-            select.value = currentState[slot].characterId;
             const character = charactersData.characters.find(c => c.id === currentState[slot].characterId);
             if (character) {
                 displayPotentials(slot, character);
             }
         } else {
-            select.value = '';
-            clearPotentials(slot);
+            document.getElementById(`${slot}-potentials`).innerHTML = '';
         }
     });
     
     saveCurrentState();
 }
 
-// ========================================
-// プリセット読み込み（ローカルストレージから）
-// ========================================
-function loadPreset(presetNumber) {
-    const data = localStorage.getItem(`preset_${presetNumber}`);
+function loadPreset(presetNum) {
+    const data = localStorage.getItem(`preset_${presetNum}`);
     return data ? JSON.parse(data) : null;
 }
 
-// ========================================
-// プリセットサムネイル更新
-// ========================================
-function updatePresetThumbnail(presetNumber, preset) {
-    const presetItem = document.querySelector(`.preset-item[data-preset="${presetNumber}"]`);
-    const icon = presetItem.querySelector('.preset-icon');
+function updatePresetDisplay(presetNum, preset) {
+    const presetItem = document.querySelector(`.preset-item[data-preset="${presetNum}"]`);
+    if (!presetItem) return;
     
+    const iconImg = presetItem.querySelector('.preset-icon');
     if (preset.main.characterId) {
         const character = charactersData.characters.find(c => c.id === preset.main.characterId);
         if (character) {
-            icon.src = character.icon;
-            icon.style.display = 'block';
+            iconImg.src = character.icon;
+            iconImg.style.display = 'block';
         }
     } else {
-        icon.style.display = 'none';
+        iconImg.style.display = 'none';
     }
 }
 
 // ========================================
-// 読み込みボタンの有効化
-// ========================================
-function enableLoadButton(presetNumber) {
-    const loadButton = document.querySelector(`.btn-load[data-preset="${presetNumber}"]`);
-    loadButton.disabled = false;
-}
-
-// ========================================
-// 現在の状態を保存（ローカルストレージ）
+// ローカルストレージ
 // ========================================
 function saveCurrentState() {
     localStorage.setItem('currentState', JSON.stringify(currentState));
 }
 
-// ========================================
-// 現在の状態を読み込み（ローカルストレージ）
-// ========================================
 function loadCurrentState() {
     const data = localStorage.getItem('currentState');
     if (data) {
