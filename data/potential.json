@@ -1,7 +1,7 @@
 {
   "characters": [
     {
-      "id": "char_10001",
+      "id": "10001",
       "name": "チーシア",
       "icon": "images/characters/char_10001.jpg",
       "descriptions": {
@@ -40,7 +40,7 @@
       }
     },
     {
-      "id": "char_10002",
+      "id": "10002",
       "name": "コハク",
       "icon": "images/characters/char_10002.jpg",
       "descriptions": {
@@ -79,7 +79,7 @@
       }
     },
     {
-      "id": "char_10003",
+      "id": "10003",
       "name": "カシミラ",
       "icon": "images/characters/char_10003.jpg",
       "descriptions": {
@@ -118,7 +118,7 @@
       }
     },
     {
-      "id": "char_10004",
+      "id": "10004",
       "name": "フローラ",
       "icon": "images/characters/char_10004.jpg",
       "descriptions": {
@@ -157,7 +157,7 @@
       }
     },
     {
-      "id": "char_20001",
+      "id": "20001",
       "name": "フリージア",
       "icon": "images/characters/char_20001.jpg",
       "descriptions": {
@@ -196,7 +196,7 @@
       }
     },
     {
-      "id": "char_20002",
+      "id": "20002",
       "name": "チトセ",
       "icon": "images/characters/char_20002.jpg",
       "descriptions": {
@@ -235,7 +235,7 @@
       }
     },
     {
-      "id": "char_20003",
+      "id": "20003",
       "name": "アヤメ",
       "icon": "images/characters/char_20003.jpg",
       "descriptions": {
@@ -274,7 +274,7 @@
       }
     },
     {
-      "id": "char_20004",
+      "id": "20004",
       "name": "シーミャオ",
       "icon": "images/characters/char_20004.jpg",
       "descriptions": {
@@ -313,7 +313,7 @@
       }
     },
     {
-      "id": "char_20005",
+      "id": "20005",
       "name": "テレサ",
       "icon": "images/characters/char_20005.jpg",
       "descriptions": {
@@ -352,7 +352,7 @@
       }
     },
     {
-      "id": "char_30001",
+      "id": "30001",
       "name": "ナノハ",
       "icon": "images/characters/char_30001.jpg",
       "descriptions": {
@@ -391,7 +391,7 @@
       }
     },
     {
-      "id": "char_30002",
+      "id": "30002",
       "name": "セイナ",
       "icon": "images/characters/char_30002.jpg",
       "descriptions": {
@@ -430,7 +430,7 @@
       }
     },
     {
-      "id": "char_30003",
+      "id": "30003",
       "name": "カナーチェ",
       "icon": "images/characters/char_30003.jpg",
       "descriptions": {
@@ -469,7 +469,7 @@
       }
     },
     {
-      "id": "char_30004",
+      "id": "30004",
       "name": "アンズ",
       "icon": "images/characters/char_30004.jpg",
       "descriptions": {
@@ -508,7 +508,7 @@
       }
     },
     {
-      "id": "char_40001",
+      "id": "40001",
       "name": "グレイ",
       "icon": "images/characters/char_40001.jpg",
       "descriptions": {
@@ -547,7 +547,7 @@
       }
     },
     {
-      "id": "char_40002",
+      "id": "40002",
       "name": "ナズナ",
       "icon": "images/characters/char_40002.jpg",
       "descriptions": {
@@ -586,7 +586,7 @@
       }
     },
     {
-      "id": "char_40003",
+      "id": "40003",
       "name": "レイセン",
       "icon": "images/characters/char_40003.jpg",
       "descriptions": {
@@ -625,7 +625,7 @@
       }
     },
     {
-      "id": "char_50001",
+      "id": "50001",
       "name": "ミネルバ",
       "icon": "images/characters/char_50001.jpg",
       "descriptions": {
@@ -664,7 +664,7 @@
       }
     },
     {
-      "id": "char_50002",
+      "id": "50002",
       "name": "シア",
       "icon": "images/characters/char_50002.jpg",
       "descriptions": {
@@ -703,7 +703,7 @@
       }
     },
     {
-      "id": "char_50003",
+      "id": "50003",
       "name": "ティリア",
       "icon": "images/characters/char_50003.jpg",
       "descriptions": {
@@ -742,7 +742,7 @@
       }
     },
     {
-      "id": "char_50004",
+      "id": "50004",
       "name": "ジンリン",
       "icon": "images/characters/char_50004.jpg",
       "descriptions": {
@@ -781,7 +781,7 @@
       }
     },
     {
-      "id": "char_50005",
+      "id": "50005",
       "name": "ラール",
       "icon": "images/characters/char_50005.jpg",
       "descriptions": {
@@ -820,7 +820,7 @@
       }
     },
     {
-      "id": "char_60001",
+      "id": "60001",
       "name": "ミスティ",
       "icon": "images/characters/char_60001.jpg",
       "descriptions": {
@@ -859,7 +859,7 @@
       }
     },
     {
-      "id": "char_60002",
+      "id": "60002",
       "name": "クルニス",
       "icon": "images/characters/char_60002.jpg",
       "descriptions": {
@@ -898,7 +898,7 @@
       }
     },
     {
-      "id": "char_60003",
+      "id": "60003",
       "name": "コゼット",
       "icon": "images/characters/char_60003.jpg",
       "descriptions": {
@@ -937,7 +937,7 @@
       }
     },
     {
-      "id": "char_60004",
+      "id": "60004",
       "name": "キャラメル",
       "icon": "images/characters/char_60004.jpg",
       "descriptions": {
