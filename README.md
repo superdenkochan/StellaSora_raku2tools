@@ -1,2 +1,2 @@
-# StellaSora_raku2tools
+# StellaSora_osaboritools
 ステラソラ楽々ツール、略してラール
