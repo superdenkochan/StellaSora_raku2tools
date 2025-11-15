@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>素質シミュレーター - ステラソラ楽々ツール</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>素質シミュレーター</h1>
+            <div class="controls">
+                <label>
+                    <input type="checkbox" id="hideUnobtained"> 取得しない素質を非表示
+                </label>
+                <button id="resetCount" class="btn">カウントリセット</button>
+                <button id="resetAll" class="btn btn-danger">初期化</button>
+                <button id="screenshot" class="btn btn-primary">スクリーンショット</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- 左側：キャラクター選択＋素質表示エリア -->
+            <div class="characters-area">
+                <!-- キャラクター1（主力） -->
+                <div class="character-section" data-slot="main">
+                    <div class="character-header">
+                        <h2>主力キャラクター</h2>
+                        <select class="character-select" data-slot="main">
+                            <option value="">キャラクターを選択してください</option>
+                        </select>
+                    </div>
+                    <div class="potentials-container" id="main-potentials">
+                        <!-- 素質はJavaScriptで動的に生成 -->
+                    </div>
+                </div>
+
+                <!-- キャラクター2（支援1） -->
+                <div class="character-section" data-slot="support1">
+                    <div class="character-header">
+                        <h2>支援キャラクター1</h2>
+                        <select class="character-select" data-slot="support1">
+                            <option value="">キャラクターを選択してください</option>
+                        </select>
+                    </div>
+                    <div class="potentials-container" id="support1-potentials">
+                        <!-- 素質はJavaScriptで動的に生成 -->
+                    </div>
+                </div>
+
+                <!-- キャラクター3（支援2） -->
+                <div class="character-section" data-slot="support2">
+                    <div class="character-header">
+                        <h2>支援キャラクター2</h2>
+                        <select class="character-select" data-slot="support2">
+                            <option value="">キャラクターを選択してください</option>
+                        </select>
+                    </div>
+                    <div class="potentials-container" id="support2-potentials">
+                        <!-- 素質はJavaScriptで動的に生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側：プリセット管理エリア -->
+            <aside class="presets-area">
+                <h3>プリセット</h3>
+                <div class="presets-list">
+                    <!-- プリセット1～10 -->
+                    <div class="preset-item" data-preset="1">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット1" class="preset-icon">
+                            <span class="preset-number">1</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="1">保存</button>
+                            <button class="btn-load" data-preset="1" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="2">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット2" class="preset-icon">
+                            <span class="preset-number">2</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="2">保存</button>
+                            <button class="btn-load" data-preset="2" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="3">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット3" class="preset-icon">
+                            <span class="preset-number">3</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="3">保存</button>
+                            <button class="btn-load" data-preset="3" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="4">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット4" class="preset-icon">
+                            <span class="preset-number">4</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="4">保存</button>
+                            <button class="btn-load" data-preset="4" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="5">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット5" class="preset-icon">
+                            <span class="preset-number">5</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="5">保存</button>
+                            <button class="btn-load" data-preset="5" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="6">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット6" class="preset-icon">
+                            <span class="preset-number">6</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="6">保存</button>
+                            <button class="btn-load" data-preset="6" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="7">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット7" class="preset-icon">
+                            <span class="preset-number">7</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="7">保存</button>
+                            <button class="btn-load" data-preset="7" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="8">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット8" class="preset-icon">
+                            <span class="preset-number">8</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="8">保存</button>
+                            <button class="btn-load" data-preset="8" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="9">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット9" class="preset-icon">
+                            <span class="preset-number">9</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="9">保存</button>
+                            <button class="btn-load" data-preset="9" disabled>読み込み</button>
+                        </div>
+                    </div>
+                    <div class="preset-item" data-preset="10">
+                        <div class="preset-thumbnail">
+                            <img src="" alt="プリセット10" class="preset-icon">
+                            <span class="preset-number">10</span>
+                        </div>
+                        <div class="preset-actions">
+                            <button class="btn-save" data-preset="10">保存</button>
+                            <button class="btn-load" data-preset="10" disabled>読み込み</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- エラーメッセージ表示エリア -->
+        <div id="errorMessage" class="error-message hidden"></div>
+    </div>
+
+    <!-- html2canvasライブラリ（スクリーンショット用） -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

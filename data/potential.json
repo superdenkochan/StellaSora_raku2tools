@@ -1,0 +1,637 @@
+{
+  "characters": [
+    {
+      "id": "char01",
+      "name": "キャラクター1",
+      "icon": "images/characters/char01.png",
+      "potentials": {
+        "main": {
+          "core": [
+            {
+              "id": "m_core_1",
+              "name": "コア素質1",
+              "image": "images/potentials/core_1.png",
+              "description": "これはコア素質1の説明です。主力時の特殊効果を発揮します。"
+            },
+            {
+              "id": "m_core_2",
+              "name": "コア素質2",
+              "image": "images/potentials/core_2.png",
+              "description": "これはコア素質2の説明です。"
+            },
+            {
+              "id": "m_core_3",
+              "name": "コア素質3",
+              "image": "images/potentials/core_3.png",
+              "description": "これはコア素質3の説明です。"
+            },
+            {
+              "id": "m_core_4",
+              "name": "コア素質4",
+              "image": "images/potentials/core_4.png",
+              "description": "これはコア素質4の説明です。"
+            }
+          ],
+          "sub": [
+            {
+              "id": "m_sub_1",
+              "name": "サブ素質1",
+              "image": "images/potentials/sub_1.png",
+              "description": "これはサブ素質1の説明です。"
+            },
+            {
+              "id": "m_sub_2",
+              "name": "サブ素質2",
+              "image": "images/potentials/sub_2.png",
+              "description": "これはサブ素質2の説明です。"
+            },
+            {
+              "id": "m_sub_3",
+              "name": "サブ素質3",
+              "image": "images/potentials/sub_3.png",
+              "description": "これはサブ素質3の説明です。"
+            },
+            {
+              "id": "m_sub_4",
+              "name": "サブ素質4",
+              "image": "images/potentials/sub_4.png",
+              "description": "これはサブ素質4の説明です。"
+            },
+            {
+              "id": "m_sub_5",
+              "name": "サブ素質5",
+              "image": "images/potentials/sub_5.png",
+              "description": "これはサブ素質5の説明です。"
+            },
+            {
+              "id": "m_sub_6",
+              "name": "サブ素質6",
+              "image": "images/potentials/sub_6.png",
+              "description": "これはサブ素質6の説明です。"
+            },
+            {
+              "id": "m_sub_7",
+              "name": "サブ素質7",
+              "image": "images/potentials/sub_7.png",
+              "description": "これはサブ素質7の説明です。"
+            },
+            {
+              "id": "m_sub_8",
+              "name": "サブ素質8",
+              "image": "images/potentials/sub_8.png",
+              "description": "これはサブ素質8の説明です。"
+            },
+            {
+              "id": "m_sub_9",
+              "name": "サブ素質9",
+              "image": "images/potentials/sub_9.png",
+              "description": "これはサブ素質9の説明です。"
+            },
+            {
+              "id": "m_sub_10",
+              "name": "サブ素質10",
+              "image": "images/potentials/sub_10.png",
+              "description": "これはサブ素質10の説明です。"
+            },
+            {
+              "id": "m_sub_11",
+              "name": "サブ素質11",
+              "image": "images/potentials/sub_11.png",
+              "description": "これはサブ素質11の説明です。"
+            },
+            {
+              "id": "m_sub_12",
+              "name": "サブ素質12",
+              "image": "images/potentials/sub_12.png",
+              "description": "これはサブ素質12の説明です。"
+            }
+          ]
+        },
+        "support": {
+          "core": [
+            {
+              "id": "s_core_1",
+              "name": "支援コア素質1",
+              "image": "images/potentials/core_1.png",
+              "description": "これは支援時のコア素質1の説明です。"
+            },
+            {
+              "id": "s_core_2",
+              "name": "支援コア素質2",
+              "image": "images/potentials/core_2.png",
+              "description": "これは支援時のコア素質2の説明です。"
+            },
+            {
+              "id": "s_core_3",
+              "name": "支援コア素質3",
+              "image": "images/potentials/core_3.png",
+              "description": "これは支援時のコア素質3の説明です。"
+            },
+            {
+              "id": "s_core_4",
+              "name": "支援コア素質4",
+              "image": "images/potentials/core_4.png",
+              "description": "これは支援時のコア素質4の説明です。"
+            }
+          ],
+          "sub": [
+            {
+              "id": "s_sub_1",
+              "name": "支援サブ素質1",
+              "image": "images/potentials/sub_1.png",
+              "description": "これは支援時のサブ素質1の説明です。"
+            },
+            {
+              "id": "s_sub_2",
+              "name": "支援サブ素質2",
+              "image": "images/potentials/sub_2.png",
+              "description": "これは支援時のサブ素質2の説明です。"
+            },
+            {
+              "id": "s_sub_3",
+              "name": "支援サブ素質3",
+              "image": "images/potentials/sub_3.png",
+              "description": "これは支援時のサブ素質3の説明です。"
+            },
+            {
+              "id": "s_sub_4",
+              "name": "支援サブ素質4",
+              "image": "images/potentials/sub_4.png",
+              "description": "これは支援時のサブ素質4の説明です。"
+            },
+            {
+              "id": "s_sub_5",
+              "name": "支援サブ素質5",
+              "image": "images/potentials/sub_5.png",
+              "description": "これは支援時のサブ素質5の説明です。"
+            },
+            {
+              "id": "s_sub_6",
+              "name": "支援サブ素質6",
+              "image": "images/potentials/sub_6.png",
+              "description": "これは支援時のサブ素質6の説明です。"
+            },
+            {
+              "id": "s_sub_7",
+              "name": "支援サブ素質7",
+              "image": "images/potentials/sub_7.png",
+              "description": "これは支援時のサブ素質7の説明です。"
+            },
+            {
+              "id": "s_sub_8",
+              "name": "支援サブ素質8",
+              "image": "images/potentials/sub_8.png",
+              "description": "これは支援時のサブ素質8の説明です。"
+            },
+            {
+              "id": "s_sub_9",
+              "name": "支援サブ素質9",
+              "image": "images/potentials/sub_9.png",
+              "description": "これは支援時のサブ素質9の説明です。"
+            },
+            {
+              "id": "s_sub_10",
+              "name": "支援サブ素質10",
+              "image": "images/potentials/sub_10.png",
+              "description": "これは支援時のサブ素質10の説明です。"
+            },
+            {
+              "id": "s_sub_11",
+              "name": "支援サブ素質11",
+              "image": "images/potentials/sub_11.png",
+              "description": "これは支援時のサブ素質11の説明です。"
+            },
+            {
+              "id": "s_sub_12",
+              "name": "支援サブ素質12",
+              "image": "images/potentials/sub_12.png",
+              "description": "これは支援時のサブ素質12の説明です。"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "char02",
+      "name": "キャラクター2",
+      "icon": "images/characters/char02.png",
+      "potentials": {
+        "main": {
+          "core": [
+            {
+              "id": "m_core_1",
+              "name": "コア素質1",
+              "image": "images/potentials/core_1.png",
+              "description": "キャラクター2のコア素質1の説明です。"
+            },
+            {
+              "id": "m_core_2",
+              "name": "コア素質2",
+              "image": "images/potentials/core_2.png",
+              "description": "キャラクター2のコア素質2の説明です。"
+            },
+            {
+              "id": "m_core_3",
+              "name": "コア素質3",
+              "image": "images/potentials/core_3.png",
+              "description": "キャラクター2のコア素質3の説明です。"
+            },
+            {
+              "id": "m_core_4",
+              "name": "コア素質4",
+              "image": "images/potentials/core_4.png",
+              "description": "キャラクター2のコア素質4の説明です。"
+            }
+          ],
+          "sub": [
+            {
+              "id": "m_sub_1",
+              "name": "サブ素質1",
+              "image": "images/potentials/sub_1.png",
+              "description": "キャラクター2のサブ素質1の説明です。"
+            },
+            {
+              "id": "m_sub_2",
+              "name": "サブ素質2",
+              "image": "images/potentials/sub_2.png",
+              "description": "キャラクター2のサブ素質2の説明です。"
+            },
+            {
+              "id": "m_sub_3",
+              "name": "サブ素質3",
+              "image": "images/potentials/sub_3.png",
+              "description": "キャラクター2のサブ素質3の説明です。"
+            },
+            {
+              "id": "m_sub_4",
+              "name": "サブ素質4",
+              "image": "images/potentials/sub_4.png",
+              "description": "キャラクター2のサブ素質4の説明です。"
+            },
+            {
+              "id": "m_sub_5",
+              "name": "サブ素質5",
+              "image": "images/potentials/sub_5.png",
+              "description": "キャラクター2のサブ素質5の説明です。"
+            },
+            {
+              "id": "m_sub_6",
+              "name": "サブ素質6",
+              "image": "images/potentials/sub_6.png",
+              "description": "キャラクター2のサブ素質6の説明です。"
+            },
+            {
+              "id": "m_sub_7",
+              "name": "サブ素質7",
+              "image": "images/potentials/sub_7.png",
+              "description": "キャラクター2のサブ素質7の説明です。"
+            },
+            {
+              "id": "m_sub_8",
+              "name": "サブ素質8",
+              "image": "images/potentials/sub_8.png",
+              "description": "キャラクター2のサブ素質8の説明です。"
+            },
+            {
+              "id": "m_sub_9",
+              "name": "サブ素質9",
+              "image": "images/potentials/sub_9.png",
+              "description": "キャラクター2のサブ素質9の説明です。"
+            },
+            {
+              "id": "m_sub_10",
+              "name": "サブ素質10",
+              "image": "images/potentials/sub_10.png",
+              "description": "キャラクター2のサブ素質10の説明です。"
+            },
+            {
+              "id": "m_sub_11",
+              "name": "サブ素質11",
+              "image": "images/potentials/sub_11.png",
+              "description": "キャラクター2のサブ素質11の説明です。"
+            },
+            {
+              "id": "m_sub_12",
+              "name": "サブ素質12",
+              "image": "images/potentials/sub_12.png",
+              "description": "キャラクター2のサブ素質12の説明です。"
+            }
+          ]
+        },
+        "support": {
+          "core": [
+            {
+              "id": "s_core_1",
+              "name": "支援コア素質1",
+              "image": "images/potentials/core_1.png",
+              "description": "キャラクター2の支援時のコア素質1の説明です。"
+            },
+            {
+              "id": "s_core_2",
+              "name": "支援コア素質2",
+              "image": "images/potentials/core_2.png",
+              "description": "キャラクター2の支援時のコア素質2の説明です。"
+            },
+            {
+              "id": "s_core_3",
+              "name": "支援コア素質3",
+              "image": "images/potentials/core_3.png",
+              "description": "キャラクター2の支援時のコア素質3の説明です。"
+            },
+            {
+              "id": "s_core_4",
+              "name": "支援コア素質4",
+              "image": "images/potentials/core_4.png",
+              "description": "キャラクター2の支援時のコア素質4の説明です。"
+            }
+          ],
+          "sub": [
+            {
+              "id": "s_sub_1",
+              "name": "支援サブ素質1",
+              "image": "images/potentials/sub_1.png",
+              "description": "キャラクター2の支援時のサブ素質1の説明です。"
+            },
+            {
+              "id": "s_sub_2",
+              "name": "支援サブ素質2",
+              "image": "images/potentials/sub_2.png",
+              "description": "キャラクター2の支援時のサブ素質2の説明です。"
+            },
+            {
+              "id": "s_sub_3",
+              "name": "支援サブ素質3",
+              "image": "images/potentials/sub_3.png",
+              "description": "キャラクター2の支援時のサブ素質3の説明です。"
+            },
+            {
+              "id": "s_sub_4",
+              "name": "支援サブ素質4",
+              "image": "images/potentials/sub_4.png",
+              "description": "キャラクター2の支援時のサブ素質4の説明です。"
+            },
+            {
+              "id": "s_sub_5",
+              "name": "支援サブ素質5",
+              "image": "images/potentials/sub_5.png",
+              "description": "キャラクター2の支援時のサブ素質5の説明です。"
+            },
+            {
+              "id": "s_sub_6",
+              "name": "支援サブ素質6",
+              "image": "images/potentials/sub_6.png",
+              "description": "キャラクター2の支援時のサブ素質6の説明です。"
+            },
+            {
+              "id": "s_sub_7",
+              "name": "支援サブ素質7",
+              "image": "images/potentials/sub_7.png",
+              "description": "キャラクター2の支援時のサブ素質7の説明です。"
+            },
+            {
+              "id": "s_sub_8",
+              "name": "支援サブ素質8",
+              "image": "images/potentials/sub_8.png",
+              "description": "キャラクター2の支援時のサブ素質8の説明です。"
+            },
+            {
+              "id": "s_sub_9",
+              "name": "支援サブ素質9",
+              "image": "images/potentials/sub_9.png",
+              "description": "キャラクター2の支援時のサブ素質9の説明です。"
+            },
+            {
+              "id": "s_sub_10",
+              "name": "支援サブ素質10",
+              "image": "images/potentials/sub_10.png",
+              "description": "キャラクター2の支援時のサブ素質10の説明です。"
+            },
+            {
+              "id": "s_sub_11",
+              "name": "支援サブ素質11",
+              "image": "images/potentials/sub_11.png",
+              "description": "キャラクター2の支援時のサブ素質11の説明です。"
+            },
+            {
+              "id": "s_sub_12",
+              "name": "支援サブ素質12",
+              "image": "images/potentials/sub_12.png",
+              "description": "キャラクター2の支援時のサブ素質12の説明です。"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "char03",
+      "name": "キャラクター3",
+      "icon": "images/characters/char03.png",
+      "potentials": {
+        "main": {
+          "core": [
+            {
+              "id": "m_core_1",
+              "name": "コア素質1",
+              "image": "images/potentials/core_1.png",
+              "description": "キャラクター3のコア素質1の説明です。"
+            },
+            {
+              "id": "m_core_2",
+              "name": "コア素質2",
+              "image": "images/potentials/core_2.png",
+              "description": "キャラクター3のコア素質2の説明です。"
+            },
+            {
+              "id": "m_core_3",
+              "name": "コア素質3",
+              "image": "images/potentials/core_3.png",
+              "description": "キャラクター3のコア素質3の説明です。"
+            },
+            {
+              "id": "m_core_4",
+              "name": "コア素質4",
+              "image": "images/potentials/core_4.png",
+              "description": "キャラクター3のコア素質4の説明です。"
+            }
+          ],
+          "sub": [
+            {
+              "id": "m_sub_1",
+              "name": "サブ素質1",
+              "image": "images/potentials/sub_1.png",
+              "description": "キャラクター3のサブ素質1の説明です。"
+            },
+            {
+              "id": "m_sub_2",
+              "name": "サブ素質2",
+              "image": "images/potentials/sub_2.png",
+              "description": "キャラクター3のサブ素質2の説明です。"
+            },
+            {
+              "id": "m_sub_3",
+              "name": "サブ素質3",
+              "image": "images/potentials/sub_3.png",
+              "description": "キャラクター3のサブ素質3の説明です。"
+            },
+            {
+              "id": "m_sub_4",
+              "name": "サブ素質4",
+              "image": "images/potentials/sub_4.png",
+              "description": "キャラクター3のサブ素質4の説明です。"
+            },
+            {
+              "id": "m_sub_5",
+              "name": "サブ素質5",
+              "image": "images/potentials/sub_5.png",
+              "description": "キャラクター3のサブ素質5の説明です。"
+            },
+            {
+              "id": "m_sub_6",
+              "name": "サブ素質6",
+              "image": "images/potentials/sub_6.png",
+              "description": "キャラクター3のサブ素質6の説明です。"
+            },
+            {
+              "id": "m_sub_7",
+              "name": "サブ素質7",
+              "image": "images/potentials/sub_7.png",
+              "description": "キャラクター3のサブ素質7の説明です。"
+            },
+            {
+              "id": "m_sub_8",
+              "name": "サブ素質8",
+              "image": "images/potentials/sub_8.png",
+              "description": "キャラクター3のサブ素質8の説明です。"
+            },
+            {
+              "id": "m_sub_9",
+              "name": "サブ素質9",
+              "image": "images/potentials/sub_9.png",
+              "description": "キャラクター3のサブ素質9の説明です。"
+            },
+            {
+              "id": "m_sub_10",
+              "name": "サブ素質10",
+              "image": "images/potentials/sub_10.png",
+              "description": "キャラクター3のサブ素質10の説明です。"
+            },
+            {
+              "id": "m_sub_11",
+              "name": "サブ素質11",
+              "image": "images/potentials/sub_11.png",
+              "description": "キャラクター3のサブ素質11の説明です。"
+            },
+            {
+              "id": "m_sub_12",
+              "name": "サブ素質12",
+              "image": "images/potentials/sub_12.png",
+              "description": "キャラクター3のサブ素質12の説明です。"
+            }
+          ]
+        },
+        "support": {
+          "core": [
+            {
+              "id": "s_core_1",
+              "name": "支援コア素質1",
+              "image": "images/potentials/core_1.png",
+              "description": "キャラクター3の支援時のコア素質1の説明です。"
+            },
+            {
+              "id": "s_core_2",
+              "name": "支援コア素質2",
+              "image": "images/potentials/core_2.png",
+              "description": "キャラクター3の支援時のコア素質2の説明です。"
+            },
+            {
+              "id": "s_core_3",
+              "name": "支援コア素質3",
+              "image": "images/potentials/core_3.png",
+              "description": "キャラクター3の支援時のコア素質3の説明です。"
+            },
+            {
+              "id": "s_core_4",
+              "name": "支援コア素質4",
+              "image": "images/potentials/core_4.png",
+              "description": "キャラクター3の支援時のコア素質4の説明です。"
+            }
+          ],
+          "sub": [
+            {
+              "id": "s_sub_1",
+              "name": "支援サブ素質1",
+              "image": "images/potentials/sub_1.png",
+              "description": "キャラクター3の支援時のサブ素質1の説明です。"
+            },
+            {
+              "id": "s_sub_2",
+              "name": "支援サブ素質2",
+              "image": "images/potentials/sub_2.png",
+              "description": "キャラクター3の支援時のサブ素質2の説明です。"
+            },
+            {
+              "id": "s_sub_3",
+              "name": "支援サブ素質3",
+              "image": "images/potentials/sub_3.png",
+              "description": "キャラクター3の支援時のサブ素質3の説明です。"
+            },
+            {
+              "id": "s_sub_4",
+              "name": "支援サブ素質4",
+              "image": "images/potentials/sub_4.png",
+              "description": "キャラクター3の支援時のサブ素質4の説明です。"
+            },
+            {
+              "id": "s_sub_5",
+              "name": "支援サブ素質5",
+              "image": "images/potentials/sub_5.png",
+              "description": "キャラクター3の支援時のサブ素質5の説明です。"
+            },
+            {
+              "id": "s_sub_6",
+              "name": "支援サブ素質6",
+              "image": "images/potentials/sub_6.png",
+              "description": "キャラクター3の支援時のサブ素質6の説明です。"
+            },
+            {
+              "id": "s_sub_7",
+              "name": "支援サブ素質7",
+              "image": "images/potentials/sub_7.png",
+              "description": "キャラクター3の支援時のサブ素質7の説明です。"
+            },
+            {
+              "id": "s_sub_8",
+              "name": "支援サブ素質8",
+              "image": "images/potentials/sub_8.png",
+              "description": "キャラクター3の支援時のサブ素質8の説明です。"
+            },
+            {
+              "id": "s_sub_9",
+              "name": "支援サブ素質9",
+              "image": "images/potentials/sub_9.png",
+              "description": "キャラクター3の支援時のサブ素質9の説明です。"
+            },
+            {
+              "id": "s_sub_10",
+              "name": "支援サブ素質10",
+              "image": "images/potentials/sub_10.png",
+              "description": "キャラクター3の支援時のサブ素質10の説明です。"
+            },
+            {
+              "id": "s_sub_11",
+              "name": "支援サブ素質11",
+              "image": "images/potentials/sub_11.png",
+              "description": "キャラクター3の支援時のサブ素質11の説明です。"
+            },
+            {
+              "id": "s_sub_12",
+              "name": "支援サブ素質12",
+              "image": "images/potentials/sub_12.png",
+              "description": "キャラクター3の支援時のサブ素質12の説明です。"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
